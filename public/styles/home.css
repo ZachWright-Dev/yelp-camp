@@ -1,0 +1,7 @@
+body {
+    height: 100vh;
+    background-image: url(https://wallpaperaccess.com/full/3653910.jpg),
+    linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5));
+    background-size: cover;
+    background-position: center;
+}
