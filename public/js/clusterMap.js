@@ -6,8 +6,7 @@ mapboxgl.accessToken = mapToken;
         center: [-103.5917, 40.6699],
         zoom: 3
     });
-
-    map.on('load', () => {
+    map.on('load', function() {
         // Add a new source from our GeoJSON data and
         // set the 'cluster' option to true. GL-JS will
         // add the point_count property to your source data.
@@ -45,9 +44,9 @@ mapboxgl.accessToken = mapToken;
                     'step',
                     ['get', 'point_count'],
                     20,
-                    100,
+                    10,
                     30,
-                    750,
+                    30,
                     40
                 ]
             }
@@ -102,10 +101,9 @@ mapboxgl.accessToken = mapToken;
         // the location of the feature, with
         // description HTML from its properties.
         map.on('click', 'unclustered-point', (e) => {
+            const text = e.features[0].properties.popUpMarkUp
             const coordinates = e.features[0].geometry.coordinates.slice();
-            const mag = e.features[0].properties.mag;
-            const tsunami =
-                e.features[0].properties.tsunami === 1 ? 'yes' : 'no';
+            const popText = `<a href="/campgrounds/${e.features[0].properties.id}">${e.features[0].properties.title}</a>`;
 
             // Ensure that if the map is zoomed out such that
             // multiple copies of the feature are visible, the
@@ -117,7 +115,7 @@ mapboxgl.accessToken = mapToken;
             new mapboxgl.Popup()
                 .setLngLat(coordinates)
                 .setHTML(
-                    `magnitude: ${mag}<br>Was there a tsunami?: ${tsunami}`
+                    popText
                 )
                 .addTo(map);
         });
